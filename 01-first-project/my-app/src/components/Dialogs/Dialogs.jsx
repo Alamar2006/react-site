@@ -2,26 +2,28 @@ import React from "react";
 import styles from './Dialogs.module.css';
 import Message from "./Message/Message";
 import DialogsItems from "./DialogItem/DialogsItem";
-import { sendMessageCreator, updateNewMessageBodyCreator } from "../../redux/dialogs-reducer";
 
 
 const Dialogs = (props) => {
 
-let state = props.store.getState().dialogsPage;
+let state = props.dialogsPage
 
-let dialogsElements = state.dialogs.map( dialog =>  <DialogsItems name={dialog.name} id={dialog.id}/> );
+let dialogsElements = state.dialogs.map( d =>  <DialogsItems key={d.id} name={d.name} id={d.id}/> );
 // метод map для удобной группировки массива
-let messagesElements = state.messages.map( message => <Message messageName={message.messageName} /> );
+let messagesElements = state.messages.map( m => <Message key={m.id} messageName={m.messageName} /> );
 // я хочу получить элементы из messageData 
 let newMessageBody = state.newMessageBody;
 
 let onSendMessageClick = () => {
-    props.store.dispatch(sendMessageCreator());
+    props.sendMessage()
+    // props.store.dispatch(sendMessageCreator());
 }
 
 let onNewMessageChange = (e) => {
     let body = e.target.value;
-    props.store.dispatch(updateNewMessageBodyCreator(body)); // e обрабатывается через функцию, мы обращаемся к e и забираем от туда body и диспатчим action
+    props.updateNewMessageBody(body)
+    // props.store.dispatch(updateNewMessageBodyCreator(body)); 
+    // // e обрабатывается через функцию, мы обращаемся к e и забираем от туда body и диспатчим action
 }
 
     return (

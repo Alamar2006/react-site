@@ -1,13 +1,17 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const IS_TOGGLE_FETCHING = 'IS_TOGGLE_FETCHING'
 
 let initialState = {
-    users: [
-        {id: 1, followed: false, fullName: 'Anderew', status: 'i am like a boss', location: {city: 'Moscow', country: 'Russia'}},
-        {id: 2, followed: true, fullName: 'Chik', status: 'No more happines', location: {city: 'Los An', country: 'US'}},
-        {id: 3, followed: false, fullName: 'Kimc hinin', status: 'Bomb ruski', location: {city: 'Kim chin', country: 'Noth Korea'}}
-    ]
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 1,
+    isFetching: false,
+
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -26,9 +30,27 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS: {
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: [...action.users]
             }
     }
+        case SET_CURRENT_PAGE: {
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        }
+        case SET_TOTAL_USERS_COUNT: {
+            return {
+                ...state,
+                totalUsersCount: action.count
+            }
+        }
+        case IS_TOGGLE_FETCHING: {
+          return {
+            ...state,
+            isFetching: action.isFetching
+          }
+        }
         default:
             return state;
     }
@@ -36,9 +58,13 @@ const usersReducer = (state = initialState, action) => {
 
 
 
-export const followAC = (userId) => ({type: FOLLOW, userId})
-export const unfollowAC = (userId) => ({type: UNFOLLOW, userId})
-export const setUsersAC = (users) => ({type: SET_USERS})
+export const follow = (userId) => ({type: FOLLOW, userId})
+export const unfollow = (userId) => ({type: UNFOLLOW, userId})
+export const setUsers = (users) => ({type: SET_USERS, users})
+export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage})
+export const setUsersTotalCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount })
+export const isToggleFetching = (isFetching) => ({type: IS_TOGGLE_FETCHING, isFetching})
 
-export default profileReducer;
+export default usersReducer;
+
 

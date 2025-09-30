@@ -3,7 +3,7 @@ import styles from "./NavBar.module.css"
 import { NavLink } from "react-router-dom";
 
 
-const NavBar = () => {
+const NavBar = (props) => {
 
 let func = ({isActive}) => ({color: isActive ? 'var(--color-active)' : 'white'});
 
@@ -21,9 +21,12 @@ let func = ({isActive}) => ({color: isActive ? 'var(--color-active)' : 'white'})
       <div>
         <NavLink to="/music" style={func} >Music</NavLink>
       </div>
-      <div>
-        <NavLink to="/settings" style={func} >Settings</NavLink>
-      </div>
+        <div>
+          <NavLink to="/settings" style={func} >Settings</NavLink>
+        </div>
+        <div>
+          <NavLink to="/users" style={func} >Users</NavLink>
+        </div>
     </nav>
     )
 } 

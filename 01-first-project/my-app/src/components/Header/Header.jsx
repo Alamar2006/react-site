@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './Header.module.css';
+import {NavLink} from "react-router-dom";
 
 
 // let c1 = 'item'
@@ -8,10 +9,18 @@ import styles from './Header.module.css';
 // let classesNew = `${styles.item} ${c2}`
 
 
-const Header = () => {
+const Header = (props) => {
     return (
         <header className={styles.header} >
         <img src="https://static.vecteezy.com/system/resources/thumbnails/012/986/755/small_2x/abstract-circle-logo-icon-free-png.png" alt="#" />
+
+          <div className={styles.loginBlock}>
+            {
+              props.isAuthenticated ? props.login : <NavLink to={'/login'}>Login</NavLink>
+            }
+
+          </div>
+
       </header>
     )
 }

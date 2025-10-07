@@ -1,6 +1,5 @@
 package app.vx.wicreatebackend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "messages")
-@JsonIgnoreProperties({"replies"})
 public class Message {
 
     @Id

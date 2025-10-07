@@ -1,14 +1,10 @@
 package app.vx.wicreatebackend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -17,12 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "users")
-@JsonIgnoreProperties({"email", "password", "chats", "messages"})
 public class User {
 
     public User (String nickName, String password) {
         setNickName(nickName);
         setPassword(password);
+        createdAtDate = LocalDate.now();
+        createdAtTime = LocalTime.now();
     }
 
     @Id
@@ -35,25 +32,34 @@ public class User {
     )
     private Long id;
 
+
     @Column(nullable = false)
     private String nickName;
 
-    @Column
     private String description;
 
     @Column(name = "avatar_url")
     private String avatarURL;
 
-    //@JsonIgnore
     @Column(unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @OneToMany
-    private List<Chat> chats = new ArrayList<>();
+    private List<Chat> chats;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Message> messages = new ArrayList<>();
+    private List<Message> messages;
+
+    @Column(name = "created_at_date")
+    private LocalDate createdAtDate;
+
+    @Column(name = "created_at_time")
+    private LocalTime createdAtTime;
+
+    @OneToMany(mappedBy = "followUser")
+    private List<Follow> follows;
+
 }

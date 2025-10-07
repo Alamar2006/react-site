@@ -1,12 +1,13 @@
 package app.vx.wicreatebackend.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,12 +27,14 @@ public class Chat {
     )
     private Long id;
 
+    @NotBlank(message = "Name cannot be empty")
+    @Size(max = 100)
     @Column
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
 
     @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
-    private List<Message> messages = new ArrayList<>();
+    private List<Message> messages;
 }
